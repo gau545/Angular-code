@@ -26,7 +26,6 @@ export class CreateComponent implements OnInit {
     });
   }
 
- 
   onSubmit() {
     this.isSubmitted = true;
     if (this.createForm.valid) {
@@ -34,9 +33,9 @@ export class CreateComponent implements OnInit {
       const createdDate = new Date(CreatedDate).toISOString();
       const data = { username: UserName, text: Text, createdDate: createdDate };
 
-      this.service.CreateNewUser(data).subscribe({
+      this.service.addUser(data).subscribe({
         next: (data) => {},
-        error: (err) => {alert(err)},
+        error: (err) => { alert(err); },
         complete: () => {
           alert('Data Added Successfully');
           this.createForm.reset();

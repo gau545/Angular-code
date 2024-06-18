@@ -1,82 +1,86 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CrudServicesService } from '../services/crud-services.service';
 import { Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { compileDeclareInjectableFromMetadata } from '@angular/compiler';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.css']
 })
-export class GridComponent implements OnInit{
+export class GridComponent implements OnInit {
+  gridData: any;
+  allGridData: any;
+  currentData: any;
 
-  gridData:any;
-  allGridData:any;
-  service = inject(CrudServicesService);
-  CurrentData:any;
+  constructor(private service: CrudServicesService, private router: Router) {}
 
-  constructor(private router: Router){}
+  ngOnInit(): void {
+    this.getAllData();
+  }
 
-  ngOnInit() {  
-    this.GetAllData();
-  } 
-
-  Search(data:any){
-    let value = data.target.value;
-    if(value != ''){
-      let gridValues = [...this.gridData]
-      this.gridData = gridValues.filter((x:any) =>  x.text.toLowerCase().includes(value) || x.username.toLowerCase().includes(value));
-    }
-    else{
+  search(data: any) {
+    let value = data.target.value.toLowerCase();
+    if (value !== '') {
+      this.gridData = this.allGridData.filter((x: any) => 
+        x.text.toLowerCase().includes(value) || x.username.toLowerCase().includes(value)
+      );
+    } else {
       this.gridData = this.allGridData;
     }
   }
 
-
-  GetAllData(){
-    this.service.getAllData().subscribe({
-      next:(data)=>{
-        if(data){
+  getAllData() {
+    this.service.getAllUsers().subscribe({
+      next: (data) => {
+        if (data) {
           this.gridData = data;
           this.allGridData = data;
           this.updateGridData();
         }
       },
-      error:()=>{},
-      complete:()=>{},
-    })
+      error: () => {},
+      complete: () => {},
+    });
   }
 
-
-  Edit(data:any){
-    // this.router.navigate(['/Update', data.id]); 
-    this.CurrentData = data;
+  edit(data: any) {
+    // Navigate to update page
+    // this.router.navigate(['/Update', data.id]);
+    this.currentData = data;
   }
 
-  deleteData(data:any){
-    this.service.DeleteById(data.id).subscribe({
-      next:(data)=>{ },
-      error:()=>{},
-      complete:()=>{alert("Data Deleted");this.GetAllData();},
-    })
-  }
-
-  New(){
-    this.router.navigate(['/Create']); 
-  }
-
-  receiveData(data:any){
-    let updatedData = {username: data.username, text: data.text};
-    this.service.updateData(data.id, updatedData).subscribe({
-      next:(data)=>{},
-      error:()=>{},
-      complete:()=>{ 
-        alert('Data updated Successfully'); 
-        document.getElementById('close')?.click();
-        this.GetAllData();
+  deleteData(data: any) {
+    this.service.deleteUser(data.id).subscribe({
+      next: (data) => {},
+      error: () => {},
+      complete: () => {
+        alert("Data Deleted");
+        this.getAllData();
       },
-    })
+    });
+  }
+
+  new() {
+    this.router.navigate(['/Create']);
+  }
+
+  receiveData(data: any) {
+    let updatedData = {
+      id: data.id,
+      username: data.username,
+      text: data.text,
+      createdDate: data.createdDate
+    };
+    this.service.updateUser(data.id, updatedData).subscribe({
+      next: () => {},
+      error: () => {},
+      complete: () => {
+        alert('Data updated Successfully');
+        document.getElementById('close')?.click();
+        this.getAllData();
+      },
+    });
   }
 
   updateGridData() {
@@ -88,5 +92,4 @@ export class GridComponent implements OnInit{
     const endIndex = startIndex + event.pageSize;
     this.gridData = this.allGridData.slice(startIndex, endIndex);
   }
-
 }

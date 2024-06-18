@@ -1,12 +1,14 @@
-<div class="mainDiv">
-    <!-- <button type="button" class="btn btn-secondary d-block mt-2 mb-2" (click)="GoBack()">Back</button> -->
+<div class="main-div">
     <ng-container *ngIf="userData">
-    <span class="created mt-2">Created</span>
-    <input class="form-control" [(ngModel)]="userData.username">
-
-    <span class="created mt-2">Text</span>
-    <textarea class="form-control" [(ngModel)]="userData.text"></textarea>
-
-    <button type="button" class="btn btn-success mt-2" (click)="Save()">Save</button>
-</ng-container>
-</div>
+      <span class="created mt-2">Created</span>
+      <input class="form-control" [(ngModel)]="userData.username">
+  
+      <span class="created mt-2">Text</span>
+      <textarea class="form-control" [(ngModel)]="userData.text"></textarea>
+      <div>
+        <button type="button" class="btn btn-success mt-2 float-css" (click)="save()">Save</button>
+      </div>
+      
+    </ng-container>
+  </div>
+  

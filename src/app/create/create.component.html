@@ -1,35 +1,37 @@
 <div class="mainDiv">
     <button type="button" class="btn btn-secondary d-block mt-2 mb-2" (click)="GoBack()">Back</button>
-
+  
     <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
-        <span class="created mt-2">Created</span>
-        <input 
-            formControlName="UserName" 
-            class="form-control" 
-            [ngClass]="{'is-invalid': isSubmitted && createForm.get('UserName')?.invalid}">
-        <div *ngIf="isSubmitted && createForm.get('UserName')?.invalid" class="invalid-feedback">
-            Username is required.
-        </div>
-
-        <span class="created mt-2">Text</span>
-        <textarea 
-            formControlName="Text" 
-            class="form-control" 
-            [ngClass]="{'is-invalid': isSubmitted && createForm.get('Text')?.invalid}"></textarea>
-        <div *ngIf="isSubmitted && createForm.get('Text')?.invalid" class="invalid-feedback">
-            Text is required.
-        </div>
-
-        <span class="created mt-2">Date</span>
-        <input 
-            type="date" 
-            formControlName="CreatedDate" 
-            class="form-control" style="width: 50%;"
-            [ngClass]="{'is-invalid': isSubmitted && createForm.get('CreatedDate')?.invalid}">
-        <div *ngIf="isSubmitted && createForm.get('CreatedDate')?.invalid" class="invalid-feedback">
-            Date is required.
-        </div>
-
-        <button type="submit" class="btn btn-success mt-2">Save</button>
+      <span class="created mt-2">Created</span>
+      <input 
+        formControlName="UserName" 
+        class="form-control" 
+        [ngClass]="{'is-invalid': isSubmitted && createForm.get('UserName')?.invalid}">
+      <div *ngIf="isSubmitted && createForm.get('UserName')?.invalid" class="invalid-feedback">
+        Username is required.
+      </div>
+  
+      <span class="created mt-2">Text</span>
+      <textarea 
+        formControlName="Text" 
+        class="form-control" 
+        [ngClass]="{'is-invalid': isSubmitted && createForm.get('Text')?.invalid}"></textarea>
+      <div *ngIf="isSubmitted && createForm.get('Text')?.invalid" class="invalid-feedback">
+        Text is required.
+      </div>
+  
+      <span class="created mt-2">Date</span>
+      <input 
+        type="date" 
+        formControlName="CreatedDate" 
+        class="form-control" 
+        style="width: 50%;"
+        [ngClass]="{'is-invalid': isSubmitted && createForm.get('CreatedDate')?.invalid}">
+      <div *ngIf="isSubmitted && createForm.get('CreatedDate')?.invalid" class="invalid-feedback">
+        Date is required.
+      </div>
+  
+      <button type="submit" class="btn btn-success mt-2">Save</button>
     </form>
-</div>
+  </div>
+  

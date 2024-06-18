@@ -1,47 +1,46 @@
 <div class="mainDiv">
-    <button type="button" class="btn btn-primary" (click)="New()">New</button>
-    <input class="form-control mt-3" (keyup)="Search($event)" placeholder="Search based on text or name">
+  <button type="button" class="btn btn-primary" (click)="new()">New</button>
+  <input class="form-control mt-3" (keyup)="search($event)" placeholder="Search based on text or name">
 
-    <ng-container *ngIf="gridData">
+  <ng-container *ngIf="gridData">
     <ng-container *ngFor="let data of gridData">
-    <div class="box1 mt-3">
+      <div class="box1 mt-3">
         <textarea class="form-control" [(ngModel)]="data.text" readonly></textarea>
         <div class="mt-2">
-            <div class="row justify-content-between">
-                <div class="col-4">
-                  <span>Created:-</span><span>{{data.username}}</span> <span class="ms-4">CreatedDate:-</span><span>{{data.createdDate | date: 'fullDate'}}</span>
-                </div>
-                <div class="col-4">
-                    <!-- (click)="Edit(data)" -->
-                    <button type="button" (click)="Edit(data)" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" >Edit</button>
-                    <button type="button" class="btn btn-danger ms-4" (click)="deleteData(data)">Delete</button>
-                </div>
-              </div>
+          <div class="row justify-content-between">
+            <div class="col-6">
+              <span>Created:-</span><span>{{ data.username }}</span> <span class="ms-4">CreatedDate:-</span><span>{{ data.createdDate | date: 'fullDate' }}</span>
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-info" (click)="edit(data)" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+              <button type="button" class="btn btn-danger ms-4" (click)="deleteData(data)">Delete</button>
+            </div>
+          </div>
         </div>
-    </div>
-    </ng-container> 
-</ng-container>
-<mat-paginator [pageSize]="2"       
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <mat-paginator [pageSize]="2"       
     [pageSizeOptions]="[2, 5, 10]"  
     [length]="20"
     (page)="onPageChange($event)">
-</mat-paginator>
+  </mat-paginator>
 </div>
 
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header" style="background-color: #000048;;">
-          <h5 class="modal-title" id="exampleModalLabel" style="color:white">Edit</h5>
-          <button type="button" class="btn-close btn-close-white" id="close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <ng-container *ngIf="CurrentData">
-             <app-update [currentData]="CurrentData" (messageEvent)="receiveData($event)"></app-update>
-            </ng-container>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #000048;">
+        <h3 class="modal-title" id="exampleModalLabel" style="color:white">Edit</h3>
+        <button type="button" class="btn-close btn-close-white" id="close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="currentData">
+          <app-update [currentData]="currentData" (messageEvent)="receiveData($event)"></app-update>
+        </ng-container>
       </div>
     </div>
   </div>
+</div>
